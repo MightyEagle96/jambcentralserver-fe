@@ -8,7 +8,7 @@ export default function AllCentersPage() {
 
   async function GetAllCenters() {
     setLoading(true);
-    const path = "jamb/getCenters";
+    const path = "getCenters";
     const res = await httpService.get(path);
     if (res) {
       setLoading(false);
@@ -22,7 +22,6 @@ export default function AllCentersPage() {
   return (
     <div>
       <div className="p-4">
-        <CreateCenterPage GetCenters={GetAllCenters} />
         <div className="mt-3">
           <div className="h3 text-center">ALL TEST CENTERS</div>
           <div className="mt-3">
@@ -64,7 +63,12 @@ export default function AllCentersPage() {
                       <td>{tc.email}</td>
                       <td>{tc.phoneNumber}</td>
                       <td>
-                        <button className="btn btn-link">View Center</button>
+                        <a
+                          href={`/viewCenter/${tc._id}`}
+                          className="btn btn-link"
+                        >
+                          View Center
+                        </a>
                       </td>
                     </tr>
                   );

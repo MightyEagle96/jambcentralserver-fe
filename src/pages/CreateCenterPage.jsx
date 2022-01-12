@@ -14,7 +14,7 @@ export default function CreateCenterPage({ GetCenters }) {
   async function CreateCenter(e) {
     e.preventDefault();
     setLoading(true);
-    const path = "jamb/createCenter";
+    const path = "createCenter";
     const res = await httpService.post(path, formData);
     if (res) {
       setFormData({});
@@ -32,7 +32,7 @@ export default function CreateCenterPage({ GetCenters }) {
     }
   }
   return (
-    <div>
+    <div className="p-4">
       <div className="border border-dark p-4">
         <div className=" h3 mb-4">Create Test Center</div>
         <form onSubmit={CreateCenter}>

@@ -2,8 +2,8 @@ import axios from "axios";
 
 import Swal from "sweetalert2";
 
-const devUrl = "http://localhost:8000";
-const prodUrl = "https://jambcentralserver.herokuapp.com/";
+const devUrl = "http://localhost:8000/jamb/";
+const prodUrl = "https://jambcentralserver.herokuapp.com/jamb/";
 
 export const backendUrl =
   process.env.REACT_APP_ENV === "production" ? prodUrl : devUrl;
