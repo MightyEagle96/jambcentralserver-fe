@@ -3,7 +3,7 @@ import "./App.css";
 import { Route, Switch } from "react-router-dom";
 
 import AllCentersPage from "./pages/AllCentersPage";
-import ViewCenterPage from "./pages/ViewCenterPage";
+import ViewCenterPage from "./pages/Center/ViewCenterPage";
 import HomePage from "./pages/Home/HomePage";
 import Navbar from "./components/NavigationBar/Navbar";
 
