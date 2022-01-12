@@ -1,0 +1,9 @@
+.welcomeBanner {
+  height: 100vh;
+  background-color: rgb(67, 150, 67);
+}
+
+.resizeLogo {
+  height: 150px;
+  width: 150px;
+}

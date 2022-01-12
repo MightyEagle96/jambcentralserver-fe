@@ -4,11 +4,14 @@ import CreateCenterPage from "./CreateCenterPage";
 
 export default function AllCentersPage() {
   const [testCenters, setTestCenters] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   async function GetAllCenters() {
+    setLoading(true);
     const path = "jamb/getCenters";
     const res = await httpService.get(path);
     if (res) {
+      setLoading(false);
       setTestCenters(res.data.jambCenters);
     }
   }
@@ -23,6 +26,15 @@ export default function AllCentersPage() {
         <div className="mt-3">
           <div className="h3 text-center">ALL TEST CENTERS</div>
           <div className="mt-3">
+            {loading ? (
+              <div className="text-center mb-3">
+                <div class="spinner-border text-success" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
             <table className="table table-bordered border-success">
               <thead className="">
                 <tr>
