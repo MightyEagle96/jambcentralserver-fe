@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
 
