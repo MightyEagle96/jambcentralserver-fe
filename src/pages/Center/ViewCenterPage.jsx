@@ -86,7 +86,7 @@ export default function ViewCenterPage() {
                       </thead>
                       <tbody className="text-center">
                         {results.centerReports.map((cr, index) => (
-                          <tr>
+                          <tr key={index}>
                             <td>{index + 1}</td>
                             <td>{cr.dateConducted}</td>
                             <td>{cr.networkTestDuration} Minutes</td>
