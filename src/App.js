@@ -7,7 +7,7 @@ import AllCentersPage from "./pages/AllCentersPage";
 import ViewCenterPage from "./pages/Center/ViewCenterPage";
 import HomePage from "./pages/Home/HomePage";
 import Navbar from "./components/NavigationBar/Navbar";
-import CreateCenterPage from "./pages/CreateCenterPage";
+import CreateCenterPage from "./pages/CreateCenter/CreateCenterPage";
 import FooterComponent from "./components/Footer/FooterComponent";
 
 function App() {

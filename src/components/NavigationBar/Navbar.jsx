@@ -99,6 +99,11 @@ export default function Navbar() {
                   Create Center
                 </a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" href="/registeredComputers">
+                  Registered Computers
+                </a>
+              </li>
               {/* <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle"

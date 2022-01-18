@@ -1,0 +1,15 @@
+.createCenter {
+  background-image: url("../../assets/createCenterImage.jpg");
+  height: max-content;
+  background-position: center;
+  background-size: cover;
+}
+
+.centerForm {
+  border-radius: 10px;
+  background-image: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.808),
+    rgba(255, 255, 255, 0.781)
+  );
+}

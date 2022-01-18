@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { httpService } from "../services/services";
-import CreateCenterPage from "./CreateCenterPage";
 
 export default function AllCentersPage() {
   const [testCenters, setTestCenters] = useState([]);
