@@ -27,6 +27,7 @@ export default function ViewCenterPage() {
     if (res) {
       setLoading(false);
       setResults(res.data);
+      console.log(res.data);
     }
   }
 
