@@ -90,8 +90,8 @@ export default function ViewCenterPage() {
                             <td>{index + 1}</td>
                             <td>{cr.dateConducted}</td>
                             <td>{cr.networkTestDuration} Minutes</td>
-                            <td>{cr.timeStarted.split(" ")[0]}</td>
-                            <td>{cr.timeStopped.split(" ")[0]}</td>
+                            <td>{cr.timeStarted.split(" ")[0] || "-"}</td>
+                            <td>{cr.timeStopped.split(" ")[0] || "-"}</td>
                             <td>{cr.connectedComputers.length}</td>
                             <td>{cr.overallTestPerformance}%</td>
                           </tr>
