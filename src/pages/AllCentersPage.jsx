@@ -34,7 +34,7 @@ export default function AllCentersPage() {
               ""
             )}
             <table className="table table-bordered border-success">
-              <thead className="">
+              <thead className="text-center">
                 <tr>
                   <th>S/N</th>
                   <th>Center Name</th>
@@ -48,7 +48,7 @@ export default function AllCentersPage() {
                   <th>View</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="text-center">
                 {testCenters.map((tc, index) => {
                   return (
                     <tr key={index}>
@@ -66,7 +66,7 @@ export default function AllCentersPage() {
                           href={`/viewCenter/${tc._id}`}
                           className="btn btn-link"
                         >
-                          View Center
+                          View
                         </a>
                       </td>
                     </tr>
