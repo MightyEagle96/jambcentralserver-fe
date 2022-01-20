@@ -104,6 +104,11 @@ export default function Navbar() {
                   Registered Computers
                 </a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" href="/utmeSubjects">
+                  UTME Subjects
+                </a>
+              </li>
               {/* <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle"

@@ -9,6 +9,7 @@ import HomePage from "./pages/Home/HomePage";
 import Navbar from "./components/NavigationBar/Navbar";
 import CreateCenterPage from "./pages/CreateCenter/CreateCenterPage";
 import FooterComponent from "./components/Footer/FooterComponent";
+import UtmeSubjectsView from "./pages/utme/UtmeSubjectsView";
 
 function App() {
   return (
@@ -29,6 +30,11 @@ function App() {
             exact
             path="/viewCenter/:id"
             component={ViewCenterPage}
+          ></Route>
+          <Route
+            exact
+            path="/utmeSubjects"
+            component={UtmeSubjectsView}
           ></Route>
           <FooterComponent></FooterComponent>
         </div>
