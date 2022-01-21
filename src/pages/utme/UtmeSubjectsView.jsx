@@ -4,13 +4,16 @@ import CreateSubject from "./CreateSubject";
 
 export default function UtmeSubjectsView() {
   const [subjects, setSubjects] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   async function GetSubjects() {
+    setLoading(true);
     const path = "viewSubjects";
     const res = await httpService.get(path);
 
     if (res) {
       setSubjects(res.data.subjects);
+      setLoading(false);
     }
   }
 
@@ -23,6 +26,15 @@ export default function UtmeSubjectsView() {
         <div className="row">
           <div className="col-md-6">
             <div className="p-3">
+              {loading ? (
+                <div className="text-center mb-3">
+                  <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
               <table className="table table-bordered">
                 <thead>
                   <tr>
