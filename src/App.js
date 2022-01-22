@@ -10,6 +10,7 @@ import Navbar from "./components/NavigationBar/Navbar";
 import CreateCenterPage from "./pages/CreateCenter/CreateCenterPage";
 import FooterComponent from "./components/Footer/FooterComponent";
 import UtmeSubjectsView from "./pages/utme/UtmeSubjectsView";
+import QuestionsView from "./pages/utme/QuestionsView";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             path="/utmeSubjects"
             component={UtmeSubjectsView}
           ></Route>
+          <Route exact path="/questions/:id" component={QuestionsView}></Route>
           <FooterComponent></FooterComponent>
         </div>
       </Switch>

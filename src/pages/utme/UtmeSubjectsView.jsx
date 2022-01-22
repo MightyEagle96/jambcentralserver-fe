@@ -12,6 +12,7 @@ export default function UtmeSubjectsView() {
     const res = await httpService.get(path);
 
     if (res) {
+      console.log(res.data);
       setSubjects(res.data.subjects);
       setLoading(false);
     }
@@ -40,6 +41,7 @@ export default function UtmeSubjectsView() {
                   <tr>
                     <th>S/N</th>
                     <th>Subject</th>
+                    <th>Set Exam Question</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -47,7 +49,15 @@ export default function UtmeSubjectsView() {
                     return (
                       <tr>
                         <td>{index + 1}</td>
-                        <td>{sub.subject}</td>
+                        <td>{sub.title}</td>
+                        <td>
+                          <a
+                            href={`/questions/${sub.slug}`}
+                            className="btn btn-outline-success"
+                          >
+                            Set Question
+                          </a>
+                        </td>
                       </tr>
                     );
                   })}

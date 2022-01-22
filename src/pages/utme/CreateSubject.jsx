@@ -19,7 +19,7 @@ export default function CreateSubject({ getSubjects }) {
       if (result.isConfirmed) {
         setLoading(true);
         const path = "createSubject";
-        const res = await httpService.post(path, { subject });
+        const res = await httpService.post(path, { title: subject });
         if (res) {
           setLoading(false);
           Swal.fire({
