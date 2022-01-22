@@ -5,6 +5,7 @@ import { httpService } from "../../services/services";
 
 export default function QuestionsCreate({ subjectData, getSubjectData }) {
   const [questionData, setQuestionData] = useState({});
+  const [loading, setLoading] = useState(false);
   const alert = useAlert();
 
   function HandleChange(e) {
@@ -12,14 +13,18 @@ export default function QuestionsCreate({ subjectData, getSubjectData }) {
   }
 
   async function PostQuestion(e) {
+    setLoading(true);
     e.preventDefault();
     const path = `postQuestion/${subjectData._id}`;
 
     const res = await httpService.post(path, questionData);
     if (res) {
+      setLoading(false);
       alert.success(res.data.message);
       getSubjectData();
       setQuestionData({});
+    } else {
+      setLoading(false);
     }
   }
 
@@ -131,7 +136,13 @@ export default function QuestionsCreate({ subjectData, getSubjectData }) {
                 </div>
                 <div className="form-group text-center">
                   <button className="btn btn-success me-2" type="submit">
-                    Save
+                    {loading ? (
+                      <div class="spinner-border text-light" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                    ) : (
+                      "Save"
+                    )}
                   </button>
                   <button className="btn btn-danger" type="reset">
                     Reset
