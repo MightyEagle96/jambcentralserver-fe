@@ -62,6 +62,8 @@ export default function QuestionsView() {
                   <th>Option C</th>
                   <th>Option D</th>
                   <th>Correct Answer</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
                 </tr>
               </thead>
               <tbody>
@@ -75,6 +77,16 @@ export default function QuestionsView() {
                         <td>{sub.optionC}</td>
                         <td>{sub.optionD}</td>
                         <td>{sub.correctAnswer}</td>
+                        <td>
+                          <button className="btn btn-light text-warning">
+                            <i class="fas fa-edit    "></i>
+                          </button>
+                        </td>
+                        <td>
+                          <button className="btn btn-light text-danger">
+                            <i class="fas fa-trash    "></i>
+                          </button>
+                        </td>
                       </tr>
                     ))
                   : ""}

@@ -22,7 +22,14 @@ export default function QuestionsCreate({ subjectData, getSubjectData }) {
       setLoading(false);
       alert.success(res.data.message);
       getSubjectData();
-      setQuestionData({});
+      setQuestionData({
+        question: "",
+        optionA: "",
+        optionB: "",
+        optionC: "",
+        optionD: "",
+        correctAnswer: "",
+      });
     } else {
       setLoading(false);
     }
