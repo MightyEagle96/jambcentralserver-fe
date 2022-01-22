@@ -73,7 +73,7 @@ export default function Navbar() {
             Central Server Monitor
           </a>
           <button
-            class="navbar-toggler"
+            class="navbar-toggler bg-white"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent"

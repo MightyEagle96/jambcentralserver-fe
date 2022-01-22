@@ -3,9 +3,25 @@ import { useAlert } from "react-alert";
 import "draft-js/dist/Draft.css";
 import { httpService } from "../../services/services";
 
-export default function QuestionsCreate({ subjectData, getSubjectData }) {
+export default function QuestionsCreate({
+  subjectData,
+  getSubjectData,
+  singleQuestion,
+}) {
   const [questionData, setQuestionData] = useState({});
+
   const [loading, setLoading] = useState(false);
+
+  if (singleQuestion) {
+    console.log(singleQuestion);
+    questionData.question = singleQuestion.question;
+    questionData.optionA = singleQuestion.optionA;
+    questionData.optionB = singleQuestion.optionB;
+    questionData.optionC = singleQuestion.optionC;
+    questionData.optionD = singleQuestion.optionD;
+    questionData.correctAnswer = singleQuestion.correctAnswer;
+    questionData._id = singleQuestion._id;
+  }
   const alert = useAlert();
 
   function HandleChange(e) {
@@ -15,23 +31,43 @@ export default function QuestionsCreate({ subjectData, getSubjectData }) {
   async function PostQuestion(e) {
     setLoading(true);
     e.preventDefault();
-    const path = `postQuestion/${subjectData._id}`;
 
-    const res = await httpService.post(path, questionData);
-    if (res) {
-      setLoading(false);
-      alert.success(res.data.message);
-      getSubjectData();
-      setQuestionData({
-        question: "",
-        optionA: "",
-        optionB: "",
-        optionC: "",
-        optionD: "",
-        correctAnswer: "",
-      });
+    if (questionData._id) {
+      const path = `updateQuestion/${subjectData._id}/${questionData._id}`;
+      const res = await httpService.patch(path, questionData);
+      if (res) {
+        setLoading(false);
+        alert.success(res.data.message);
+        getSubjectData();
+        setQuestionData({
+          question: "",
+          optionA: "",
+          optionB: "",
+          optionC: "",
+          optionD: "",
+          correctAnswer: "",
+          _id: "",
+        });
+      }
     } else {
-      setLoading(false);
+      const path = `postQuestion/${subjectData._id}`;
+
+      const res = await httpService.post(path, questionData);
+      if (res) {
+        setLoading(false);
+        alert.success(res.data.message);
+        getSubjectData();
+        setQuestionData({
+          question: "",
+          optionA: "",
+          optionB: "",
+          optionC: "",
+          optionD: "",
+          correctAnswer: "",
+        });
+      } else {
+        setLoading(false);
+      }
     }
   }
 
@@ -39,6 +75,7 @@ export default function QuestionsCreate({ subjectData, getSubjectData }) {
     <div>
       <div className="p-3">
         <div className="border border-light p-5 rounded-3 border-2">
+          <div className="h3 mb-3 text-success">Create Questions</div>
           <form onSubmit={PostQuestion}>
             <div className="row">
               <div className="col-md-4 border-end">
@@ -147,6 +184,8 @@ export default function QuestionsCreate({ subjectData, getSubjectData }) {
                       <div class="spinner-border text-light" role="status">
                         <span class="visually-hidden">Loading...</span>
                       </div>
+                    ) : questionData._id ? (
+                      "Update"
                     ) : (
                       "Save"
                     )}

@@ -7,6 +7,12 @@ import { useAlert } from "react-alert";
 export default function QuestionsView() {
   const [subjectData, setSubjectData] = useState({});
   const [loading, setLoading] = useState(false);
+  const [loadSpecific, setLoadSpecific] = useState({
+    loading: false,
+    id: "",
+    type: "",
+  });
+  const [singleQuestion, setSingleQuestion] = useState(null);
   const alert = useAlert();
 
   const { id } = useParams();
@@ -24,6 +30,33 @@ export default function QuestionsView() {
       alert.error("Cannot get questions");
     }
   }
+
+  const FetchQuestion = async (questionId) => {
+    setLoadSpecific({ loading: true, id: questionId, type: "edit" });
+    const path = `viewQuestion/${subjectData._id}/${questionId}`;
+    const res = await httpService.get(path);
+    if (res) {
+      setLoadSpecific({ loading: false, id: "" });
+
+      setSingleQuestion(res.data.question);
+
+      setTimeout(() => {
+        setSingleQuestion(null);
+      }, 3000);
+    }
+  };
+  const DeleteQuestion = async (questionId) => {
+    setLoadSpecific({ loading: true, id: questionId, type: "delete" });
+    const path = `deleteQuestion/${subjectData._id}/${questionId}`;
+    const res = await httpService.delete(path);
+    if (res) {
+      setLoadSpecific({ loading: false, id: "", type: "" });
+
+      setSingleQuestion(res.data.question);
+      GetSubjectData();
+    }
+  };
+
   useEffect(() => {
     GetSubjectData();
   }, []);
@@ -32,6 +65,7 @@ export default function QuestionsView() {
       <QuestionsCreate
         subjectData={subjectData}
         getSubjectData={GetSubjectData}
+        singleQuestion={singleQuestion}
       ></QuestionsCreate>
       {loading ? (
         <div className="text-center">
@@ -78,13 +112,45 @@ export default function QuestionsView() {
                         <td>{sub.optionD}</td>
                         <td>{sub.correctAnswer}</td>
                         <td>
-                          <button className="btn btn-light text-warning">
-                            <i class="fas fa-edit    "></i>
+                          <button
+                            className="btn btn-light text-warning"
+                            onClick={() => {
+                              FetchQuestion(sub._id);
+                            }}
+                          >
+                            {loadSpecific.loading &&
+                            loadSpecific.id === sub._id &&
+                            loadSpecific.type === "edit" ? (
+                              <div
+                                class="spinner-border spinner-border-sm text-warning"
+                                role="status"
+                              >
+                                <span class="visually-hidden">Loading...</span>
+                              </div>
+                            ) : (
+                              <i class="fas fa-edit    "></i>
+                            )}
                           </button>
                         </td>
                         <td>
-                          <button className="btn btn-light text-danger">
-                            <i class="fas fa-trash    "></i>
+                          <button
+                            className="btn btn-light text-danger"
+                            onClick={() => {
+                              DeleteQuestion(sub._id);
+                            }}
+                          >
+                            {loadSpecific.loading &&
+                            loadSpecific.id === sub._id &&
+                            loadSpecific.type === "delete" ? (
+                              <div
+                                class="spinner-border spinner-border-sm text-danger"
+                                role="status"
+                              >
+                                <span class="visually-hidden">Loading...</span>
+                              </div>
+                            ) : (
+                              <i class="fas fa-trash    "></i>
+                            )}
                           </button>
                         </td>
                       </tr>
