@@ -29,7 +29,7 @@ export default function QuestionsCreate({ subjectData, getSubjectData }) {
         <div className="border border-light p-5 rounded-3 border-2">
           <form onSubmit={PostQuestion}>
             <div className="row">
-              <div className="col-md-6 border-end">
+              <div className="col-md-4 border-end">
                 <label htmlFor="question" className="mb-2">
                   Question
                 </label>
@@ -44,7 +44,7 @@ export default function QuestionsCreate({ subjectData, getSubjectData }) {
                   required
                 ></textarea>
               </div>
-              <div className="col-md-2 border-end">
+              <div className="col-md-3 border-end">
                 <label htmlFor="optionA" className="mb-2">
                   Option A
                 </label>
@@ -74,7 +74,7 @@ export default function QuestionsCreate({ subjectData, getSubjectData }) {
                   />
                 </div>
               </div>
-              <div className="col-md-2 border-end">
+              <div className="col-md-3 border-end">
                 <label htmlFor="optionC" className="mb-2">
                   Option C
                 </label>
