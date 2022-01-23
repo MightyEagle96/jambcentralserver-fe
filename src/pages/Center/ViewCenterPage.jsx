@@ -17,17 +17,17 @@ export default function ViewCenterPage() {
   const { id } = useParams();
   const columns = [
     {
-      name: "Exam Date",
+      name: "Date Conducted",
       selector: "dateConducted",
       sortable: true,
     },
     {
-      name: "Network Test No.",
+      name: "Test Duration (Mins)",
       selector: "networkTestDuration",
       sortable: true,
     },
     {
-      name: "Exam Date",
+      name: "Performance (%)",
       selector: "overallTestPerformance",
       sortable: true,
     },
