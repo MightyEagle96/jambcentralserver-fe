@@ -18,6 +18,7 @@ export default function AllCentersPage() {
   useEffect(() => {
     GetAllCenters();
   }, []);
+
   return (
     <div>
       <div className="p-4">
