@@ -1,16 +1,16 @@
-import "bootstrap/dist/css/bootstrap.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import "./App.css";
+import "bootstrap/dist/css/bootstrap.css";
 import { Route, Switch } from "react-router-dom";
-
+import "./App.css";
+import FooterComponent from "./components/Footer/FooterComponent";
+import Navbar from "./components/NavigationBar/Navbar";
 import AllCentersPage from "./pages/AllCentersPage";
 import ViewCenterPage from "./pages/Center/ViewCenterPage";
-import HomePage from "./pages/Home/HomePage";
-import Navbar from "./components/NavigationBar/Navbar";
 import CreateCenterPage from "./pages/CreateCenter/CreateCenterPage";
-import FooterComponent from "./components/Footer/FooterComponent";
-import UtmeSubjectsView from "./pages/utme/UtmeSubjectsView";
+import HomePage from "./pages/Home/HomePage";
 import QuestionsView from "./pages/utme/QuestionsView";
+import UtmeSubjectsView from "./pages/utme/UtmeSubjectsView";
+
 
 function App() {
   return (
