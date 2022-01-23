@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
+import ErrorBoundary from "./utils/ErrorBoundary";
 
 const options = {
   position: positions.TOP_CENTER,
@@ -14,13 +15,15 @@ const options = {
   transition: transitions.SCALE,
 };
 ReactDOM.render(
-  <React.StrictMode>
-    <AlertProvider template={AlertTemplate} {...options}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </AlertProvider>
-  </React.StrictMode>,
+  <ErrorBoundary>
+    <React.StrictMode>
+      <AlertProvider template={AlertTemplate} {...options}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </AlertProvider>
+    </React.StrictMode>
+  </ErrorBoundary>,
   document.getElementById("root")
 );
 
