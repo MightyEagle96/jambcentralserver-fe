@@ -8,17 +8,6 @@ export default function AllCentersPage() {
   const [testCenters, setTestCenters] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // async function GetAllCenters() {
-  //   setLoading(true);
-  //   // const path = "getCenters";
-  //   // const res = await httpService.get(path);
-
-  //   // if (res) {
-  //   //   setLoading(false);
-  //   //   setTestCenters(res.data.jambCenters);
-  //   // }
-  // }
-
   const GetAllCenters = async () => {
     setLoading(true);
     try {
@@ -42,8 +31,8 @@ export default function AllCentersPage() {
           <div className="mt-3">
             {loading ? (
               <div className="text-center mb-3">
-                <div class="spinner-border text-success" role="status">
-                  <span class="visually-hidden">Loading...</span>
+                <div className="spinner-border text-success" role="status">
+                  <span className="visually-hidden">Loading...</span>
                 </div>
               </div>
             ) : (
@@ -65,7 +54,7 @@ export default function AllCentersPage() {
                 </tr>
               </thead>
               <tbody className="text-center">
-                {testCenters.map((tc, index) => {
+                {testCenters?.map((tc, index) => {
                   return (
                     <tr key={index}>
                       <td>{index + 1}</td>

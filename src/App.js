@@ -14,9 +14,8 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={HomePage}></Route>
-          <div>
+          <>
             <Navbar></Navbar>
-
             <Route exact path="/allCenters" component={AllCentersPage}></Route>
             <Route
               exact
@@ -40,7 +39,7 @@ function App() {
               component={QuestionsView}
             ></Route>
             <FooterComponent></FooterComponent>
-          </div>
+          </>
         </Switch>
       </BrowserRouter>
     </div>
