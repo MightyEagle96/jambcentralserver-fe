@@ -1,19 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { getAllCenterApi } from "../redux/actions/centerActions";
-import { httpService } from "../services/services";
-import { errorAlert } from "../components/alerts";
-import PageHelmet from "../utils/PageHelmet";
-import Loader from "../components/elements/Loader";
+import React, { useEffect, useMemo, useState } from "react";
 import DataTable from "react-data-table-component";
+import { useHistory } from "react-router-dom";
+import { errorAlert } from "../components/alerts";
+import Loader from "../components/elements/Loader";
+import { getAllCenterApi } from "../redux/actions/centerActions";
+import PageHelmet from "../utils/PageHelmet";
+import CenterDetail from "./Center/CenterDetail";
 
 const AllCentersPage = () => {
+  const history = useHistory();
   const [testCenters, setTestCenters] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showDetail, setShowDetail] = useState(false);
+  const [selectedCenter, setSelectedCenter] = useState({});
 
   const columns = [
     {
       name: "Center Name",
-      selector: "centerName",
+      selector: (row) => row.centerName,
       sortable: true,
       // grow: 1,
     },
@@ -58,12 +62,15 @@ const AllCentersPage = () => {
     setLoading(true);
     try {
       const response = await getAllCenterApi();
-      console.log(response);
       setTestCenters(response.jambCenters);
       setLoading(false);
     } catch (error) {
       errorAlert(error);
     }
+  };
+
+  const viewCenterDetail = (row) => {
+    history.push(`/viewCenter/${row._id}/`);
   };
 
   useEffect(() => {
@@ -73,30 +80,28 @@ const AllCentersPage = () => {
   return (
     <>
       <PageHelmet title="All Test Centers" />
-      <div className="container">
-        <div className="p-4">
-          <div className="mt-3">
-            <div className="h3 text-center">ALL TEST CENTERS</div>
-            <div className="row">
-              <div className="col-md-8">
-                
-              </div>
-              <div className="col-md-4"></div>
-            </div>
-            <div className="row">
-              <div className="col-md-12">
-                <DataTable
-                  columns={columns}
-                  data={testCenters}
-                  highlightOnHover
-                  pointerOnHover
-                  progressPending={loading}
-                  progressComponent={<Loader />}
-                  pagination
-                  paginationServer
-                />
-              </div>
-            </div>
+      <div className="container py-4">
+        {/* <div className="h3 text-center">ALL TEST CENTERS</div> */}
+
+        {/* Serach Functionality */}
+        {/* <div className="row">
+          <div className="col-md-8"></div>
+          <div className="col-md-4"></div>
+        </div> */}
+        <div className="row">
+          <div className="col-md-12">
+            <DataTable
+              title="All Test Centers"
+              columns={columns}
+              data={testCenters}
+              highlightOnHover
+              pointerOnHover
+              progressPending={loading}
+              progressComponent={<Loader />}
+              pagination
+              paginationServer
+              onRowClicked={viewCenterDetail}
+            />
           </div>
         </div>
       </div>
