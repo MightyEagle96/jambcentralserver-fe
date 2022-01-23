@@ -1,6 +1,7 @@
 import axios from "axios";
 import { history } from "../utils/History";
 import { errorAlert } from "../components/alerts";
+import store from "store";
 
 const url =
   process.env.REACT_APP_ENV === "production"
@@ -11,8 +12,14 @@ const instance = axios.create({
   baseURL: url,
 });
 
+const token = store.get("token");
+console.log(token);
+
 instance.interceptors.request.use(
   (config) => {
+    const token = store.get("token") || "";
+
+    config.headers["Authorization"] = `Bearer ${token}`;
     config.headers["Content-Type"] = "application/json";
 
     return config;

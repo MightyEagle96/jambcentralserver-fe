@@ -1,19 +1,34 @@
 import React, { useState, useEffect } from "react";
+import { getAllCenterApi } from "../redux/actions/centerActions";
 import { httpService } from "../services/services";
+import store from "store";
+import { errorAlert } from "../components/alerts";
 
 export default function AllCentersPage() {
   const [testCenters, setTestCenters] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  async function GetAllCenters() {
+  // async function GetAllCenters() {
+  //   setLoading(true);
+  //   // const path = "getCenters";
+  //   // const res = await httpService.get(path);
+
+  //   // if (res) {
+  //   //   setLoading(false);
+  //   //   setTestCenters(res.data.jambCenters);
+  //   // }
+  // }
+
+  const GetAllCenters = async () => {
     setLoading(true);
-    const path = "getCenters";
-    const res = await httpService.get(path);
-    if (res) {
+    try {
+      const response = await getAllCenterApi();
+      setTestCenters(response.jambCenters);
       setLoading(false);
-      setTestCenters(res.data.jambCenters);
+    } catch (error) {
+      errorAlert(error);
     }
-  }
+  };
 
   useEffect(() => {
     GetAllCenters();
