@@ -1,15 +1,19 @@
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/js/bootstrap.min.js";
+
 import React from "react";
 import { positions, Provider as AlertProvider, transitions } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
-
+import "./App.css";
 import "./index.css";
-import "bootstrap/dist/js/bootstrap.min.js";
-
 import reportWebVitals from "./reportWebVitals";
 import ErrorBoundary from "./utils/ErrorBoundary";
+
+
 
 const options = {
   position: positions.TOP_CENTER,

@@ -1,7 +1,4 @@
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import "bootstrap/dist/css/bootstrap.css";
 import { Route, Switch } from "react-router-dom";
-import "./App.css";
 import FooterComponent from "./components/Footer/FooterComponent";
 import Navbar from "./components/NavigationBar/Navbar";
 import AllCentersPage from "./pages/AllCentersPage";
@@ -10,7 +7,6 @@ import CreateCenterPage from "./pages/CreateCenter/CreateCenterPage";
 import HomePage from "./pages/Home/HomePage";
 import QuestionsView from "./pages/utme/QuestionsView";
 import UtmeSubjectsView from "./pages/utme/UtmeSubjectsView";
-
 
 function App() {
   return (
