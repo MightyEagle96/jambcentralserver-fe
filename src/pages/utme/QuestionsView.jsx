@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { httpService } from "../../services/services";
 import QuestionsCreate from "./QuestionsCreate";
 import { useAlert } from "react-alert";
+import Swal from "sweetalert2";
 
 export default function QuestionsView() {
   const [subjectData, setSubjectData] = useState({});
@@ -45,16 +46,24 @@ export default function QuestionsView() {
       }, 3000);
     }
   };
-  const DeleteQuestion = async (questionId) => {
-    setLoadSpecific({ loading: true, id: questionId, type: "delete" });
-    const path = `deleteQuestion/${subjectData._id}/${questionId}`;
-    const res = await httpService.delete(path);
-    if (res) {
-      setLoadSpecific({ loading: false, id: "", type: "" });
+  const DeleteQuestion = (questionId) => {
+    Swal.fire({
+      icon: "question",
+      title: "Delete Question",
+      text: "Do you wish to delete this question?",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        setLoadSpecific({ loading: true, id: questionId, type: "delete" });
+        const path = `deleteQuestion/${subjectData._id}/${questionId}`;
+        const res = await httpService.delete(path);
+        if (res) {
+          setLoadSpecific({ loading: false, id: "", type: "" });
 
-      setSingleQuestion(res.data.question);
-      GetSubjectData();
-    }
+          setSingleQuestion(res.data.question);
+          GetSubjectData();
+        }
+      }
+    });
   };
 
   useEffect(() => {
