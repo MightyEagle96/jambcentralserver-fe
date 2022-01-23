@@ -7,12 +7,15 @@ import { positions, Provider as AlertProvider, transitions } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
+import { PersistGate } from "redux-persist/lib/integration/react";
 import App from "./App";
 import "./App.css";
 import "./index.css";
 import MyApp from "./MyApp";
 import reportWebVitals from "./reportWebVitals";
 import ErrorBoundary from "./utils/ErrorBoundary";
+import { persistor, store } from "./store";
+import { Provider } from "react-redux";
 
 const options = {
   position: positions.TOP_CENTER,
@@ -22,14 +25,16 @@ const options = {
 };
 ReactDOM.render(
   <ErrorBoundary>
-    <React.StrictMode>
-      <AlertProvider template={AlertTemplate} {...options}>
-        <BrowserRouter>
-          <App />
-          {/* <MyApp /> */}
-        </BrowserRouter>
-      </AlertProvider>
-    </React.StrictMode>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <React.StrictMode>
+          <AlertProvider template={AlertTemplate} {...options}>
+            <App />
+            {/* <MyApp /> */}
+          </AlertProvider>
+        </React.StrictMode>
+      </PersistGate>
+    </Provider>
   </ErrorBoundary>,
   document.getElementById("root")
 );
