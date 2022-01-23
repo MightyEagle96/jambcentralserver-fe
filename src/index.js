@@ -1,11 +1,14 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
-import { transitions, positions, Provider as AlertProvider } from "react-alert";
+import { positions, Provider as AlertProvider, transitions } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
+import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
+
+import "./index.css";
+import "bootstrap/dist/js/bootstrap.min.js";
+
+import reportWebVitals from "./reportWebVitals";
 import ErrorBoundary from "./utils/ErrorBoundary";
 
 const options = {
