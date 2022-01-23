@@ -1,82 +1,112 @@
-import React, { useState, useEffect } from "react";
-import { httpService } from "../services/services";
+import React, { useEffect, useMemo, useState } from "react";
+import DataTable from "react-data-table-component";
+import { useHistory } from "react-router-dom";
+import { errorAlert } from "../components/alerts";
+import Loader from "../components/elements/Loader";
+import { getAllCenterApi } from "../redux/actions/centerActions";
+import PageHelmet from "../utils/PageHelmet";
+import CenterDetail from "./Center/CenterDetail";
 
-export default function AllCentersPage() {
+const AllCentersPage = () => {
+  const history = useHistory();
   const [testCenters, setTestCenters] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showDetail, setShowDetail] = useState(false);
+  const [selectedCenter, setSelectedCenter] = useState({});
 
-  async function GetAllCenters() {
+  const columns = [
+    {
+      name: "Center Name",
+      selector: (row) => row.centerName,
+      sortable: true,
+      // grow: 1,
+    },
+    {
+      name: "Reference No.",
+      selector: "referenceNumber",
+      sortable: true,
+    },
+    {
+      name: "Address",
+      selector: "address",
+      sortable: true,
+    },
+    {
+      name: "LGA",
+      selector: "localGovernmentArea",
+      sortable: true,
+    },
+    {
+      name: "State",
+      selector: "state",
+      sortable: true,
+    },
+    {
+      name: "Center Admin",
+      selector: "centerAdministrator",
+      sortable: true,
+    },
+    {
+      name: "Center Email",
+      selector: "email",
+      sortable: true,
+    },
+    {
+      name: "Center Phone",
+      selector: "phoneNumber",
+      sortable: true,
+    },
+  ];
+
+  const GetAllCenters = async () => {
     setLoading(true);
-    const path = "getCenters";
-    const res = await httpService.get(path);
-    if (res) {
+    try {
+      const response = await getAllCenterApi();
+      setTestCenters(response.jambCenters);
       setLoading(false);
-      setTestCenters(res.data.jambCenters);
+    } catch (error) {
+      errorAlert(error);
     }
-  }
+  };
+
+  const viewCenterDetail = (row) => {
+    history.push(`/viewCenter/${row._id}/`);
+  };
 
   useEffect(() => {
     GetAllCenters();
   }, []);
+
   return (
-    <div>
-      <div className="p-4">
-        <div className="mt-3">
-          <div className="h3 text-center">ALL TEST CENTERS</div>
-          <div className="mt-3">
-            {loading ? (
-              <div className="text-center mb-3">
-                <div class="spinner-border text-success" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-              </div>
-            ) : (
-              ""
-            )}
-            <table className="table table-bordered border-success">
-              <thead className="text-center">
-                <tr>
-                  <th>S/N</th>
-                  <th>Center Name</th>
-                  <th>Reference Number</th>
-                  <th>State</th>
-                  <th>Local Government Area</th>
-                  <th>Address</th>
-                  <th>Center Administator</th>
-                  <th>Email Address</th>
-                  <th>Phone Number</th>
-                  <th>View</th>
-                </tr>
-              </thead>
-              <tbody className="text-center">
-                {testCenters.map((tc, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>{tc.centerName}</td>
-                      <td>{tc.referenceNumber.toUpperCase()}</td>
-                      <td>{tc.state}</td>
-                      <td>{tc.localGovernmentArea}</td>
-                      <td>{tc.address}</td>
-                      <td>{tc.centerAdministrator}</td>
-                      <td>{tc.email}</td>
-                      <td>{tc.phoneNumber}</td>
-                      <td>
-                        <a
-                          href={`/viewCenter/${tc._id}`}
-                          className="btn btn-link"
-                        >
-                          View
-                        </a>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+    <>
+      <PageHelmet title="All Test Centers" />
+      <div className="container py-4">
+        {/* <div className="h3 text-center">ALL TEST CENTERS</div> */}
+
+        {/* Serach Functionality */}
+        {/* <div className="row">
+          <div className="col-md-8"></div>
+          <div className="col-md-4"></div>
+        </div> */}
+        <div className="row">
+          <div className="col-md-12">
+            <DataTable
+              title="All Test Centers"
+              columns={columns}
+              data={testCenters}
+              highlightOnHover
+              pointerOnHover
+              progressPending={loading}
+              progressComponent={<Loader />}
+              pagination
+              paginationServer
+              onRowClicked={viewCenterDetail}
+            />
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
-}
+};
+
+export default AllCentersPage;
