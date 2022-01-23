@@ -1,5 +1,6 @@
 import axios from "axios";
 import { history } from "../utils/History";
+import { errorAlert } from "../components/alerts";
 
 const url =
   process.env.REACT_APP_ENV === "production"
@@ -25,10 +26,20 @@ const successHandler = (response) => {
   return response;
 };
 
-const errorhandler = (error) => {
+const errorHandler = (error) => {
   const status = error.response;
   if (status === 401) {
-    triggerError("Your session has expired! Kindly Login again");
+    errorAlert("YSession has expired! Kindly Login again");
     history.push("/");
   }
+  return Promise.reject(error);
 };
+
+instance.interceptors.response.use(
+  (response) => successHandler(response),
+  (error) => {
+    return errorHandler(error);
+  }
+);
+
+export default instance;
