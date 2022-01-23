@@ -23,6 +23,7 @@ const options = {
   offset: "30px",
   transition: transitions.SCALE,
 };
+
 ReactDOM.render(
   <ErrorBoundary>
     <Provider store={store}>
