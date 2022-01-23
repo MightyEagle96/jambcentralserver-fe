@@ -1,11 +1,21 @@
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/js/bootstrap.min.js";
+
 import React from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
-import { transitions, positions, Provider as AlertProvider } from "react-alert";
+import { positions, Provider as AlertProvider, transitions } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
+import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
+import { PersistGate } from "redux-persist/lib/integration/react";
+import App from "./App";
+import "./App.css";
+import "./index.css";
+import MyApp from "./MyApp";
+import reportWebVitals from "./reportWebVitals";
+import ErrorBoundary from "./utils/ErrorBoundary";
+import { persistor, store } from "./store";
+import { Provider } from "react-redux";
 
 const options = {
   position: positions.TOP_CENTER,
@@ -13,14 +23,20 @@ const options = {
   offset: "30px",
   transition: transitions.SCALE,
 };
+
 ReactDOM.render(
-  <React.StrictMode>
-    <AlertProvider template={AlertTemplate} {...options}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </AlertProvider>
-  </React.StrictMode>,
+  <ErrorBoundary>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <React.StrictMode>
+          <AlertProvider template={AlertTemplate} {...options}>
+            <App />
+            {/* <MyApp /> */}
+          </AlertProvider>
+        </React.StrictMode>
+      </PersistGate>
+    </Provider>
+  </ErrorBoundary>,
   document.getElementById("root")
 );
 

@@ -6,7 +6,7 @@ export default function FooterComponent() {
     <div>
       <footer className="footer p-4">
         <div className="text-center">
-          <img src={JambLogo} alt="" srcset="" className="footerLogo" />
+          <img src={JambLogo} alt="" className="footerLogo" />
         </div>
       </footer>
     </div>
