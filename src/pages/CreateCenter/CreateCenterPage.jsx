@@ -63,6 +63,7 @@ export default function CreateCenterPage({ GetCenters }) {
                   id="centerName"
                   className="form-control"
                   style={{ width: 300 }}
+                  required
                 />
               </div>
               <div className="form-group mb-3">
@@ -74,6 +75,7 @@ export default function CreateCenterPage({ GetCenters }) {
                   style={{ width: 300 }}
                   value={formData.state}
                   onChange={HandleChange}
+                  required
                 >
                   <option value="">Select a state</option>
                   {statesAndLgas.map((s, index) => (
@@ -93,6 +95,7 @@ export default function CreateCenterPage({ GetCenters }) {
                   style={{ width: 300 }}
                   value={formData.localGovernmentArea}
                   onChange={HandleChange}
+                  required
                 >
                   <option value="">Select local govenment area</option>
                   {formData.state
@@ -117,6 +120,7 @@ export default function CreateCenterPage({ GetCenters }) {
                   onChange={HandleChange}
                   className="form-control"
                   value={formData.address}
+                  required
                 ></textarea>
               </div>
               <div className="form-group mb-3">
@@ -129,6 +133,7 @@ export default function CreateCenterPage({ GetCenters }) {
                   style={{ width: 300 }}
                   onChange={HandleChange}
                   value={formData.computers}
+                  required
                 />
               </div>
               <div className="form-group mb-2 me-3">
@@ -141,6 +146,7 @@ export default function CreateCenterPage({ GetCenters }) {
                   style={{ width: 300 }}
                   onChange={HandleChange}
                   value={formData.backupComputers}
+                  required
                 />
               </div>
               <div className="form-group mb-2 me-3">
@@ -155,6 +161,7 @@ export default function CreateCenterPage({ GetCenters }) {
                   style={{ width: 300 }}
                   onChange={HandleChange}
                   value={formData.centerAdministrator}
+                  required
                 />
               </div>
               <div className="form-group mb-2 me-3">
@@ -167,6 +174,7 @@ export default function CreateCenterPage({ GetCenters }) {
                   style={{ width: 300 }}
                   onChange={HandleChange}
                   value={formData.email}
+                  required
                 />
               </div>
               <div className="form-group mb-2 me-3">
@@ -179,10 +187,11 @@ export default function CreateCenterPage({ GetCenters }) {
                   style={{ width: 300 }}
                   onChange={HandleChange}
                   value={formData.phoneNumber}
+                  required
                 />
               </div>
 
-              <div className="form-group text-center">
+              <div className="form-group text-center mt-4">
                 <button className="btn btn-success me-2" type="submit">
                   {loading ? (
                     <div class="spinner-border spinner-border-sm" role="status">
