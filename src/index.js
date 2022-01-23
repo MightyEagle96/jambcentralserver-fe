@@ -10,10 +10,9 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./App.css";
 import "./index.css";
+import MyApp from "./MyApp";
 import reportWebVitals from "./reportWebVitals";
 import ErrorBoundary from "./utils/ErrorBoundary";
-
-
 
 const options = {
   position: positions.TOP_CENTER,
@@ -27,6 +26,7 @@ ReactDOM.render(
       <AlertProvider template={AlertTemplate} {...options}>
         <BrowserRouter>
           <App />
+          {/* <MyApp /> */}
         </BrowserRouter>
       </AlertProvider>
     </React.StrictMode>

@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import NotFound from "../pages/NotFound";
 import { history } from "../utils/History";
 import PublicRoutes from "./PublicRoutes";
 import Routes from "./Routes";
@@ -13,6 +14,7 @@ const MainRoutes = (props) => {
         {Routes?.map((route, i) => {
           return <PublicRoutes key={i} {...route} />;
         })}
+        <Route path="*" component={NotFound} />
       </Switch>
     </BrowserRouter>
   );
