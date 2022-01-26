@@ -7,6 +7,7 @@ import CreateCenterPage from "./pages/CreateCenter/CreateCenterPage";
 import HomePage from "./pages/Home/HomePage";
 import QuestionsView from "./pages/utme/QuestionsView";
 import UtmeSubjectsView from "./pages/utme/UtmeSubjectsView";
+import CandidatesView from "./pages/Candidates/CandidatesView";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
               path="/questions/:id"
               component={QuestionsView}
             ></Route>
+            <Route exact path="/candidates" component={CandidatesView}></Route>
             <FooterComponent></FooterComponent>
           </>
         </Switch>

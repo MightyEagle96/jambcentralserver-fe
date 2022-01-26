@@ -1,4 +1,5 @@
 import AllCentersPage from "../pages/AllCentersPage";
+import CandidatesView from "../pages/Candidates/CandidatesView";
 import ViewCenterPage from "../pages/Center/ViewCenterPage";
 import CreateCenterPage from "../pages/CreateCenter/CreateCenterPage";
 import HomePage from "../pages/Home/HomePage";
@@ -12,6 +13,7 @@ const Routes = [
   { path: "/view-center/:id", exact: true, component: ViewCenterPage },
   { path: "/utme-subjects", exact: true, component: UtmeSubjectsView },
   { path: "/questions/:id", exact: true, component: QuestionsView },
+  { path: "/candidates", exact: true, component: CandidatesView },
 ];
 
 export default Routes;

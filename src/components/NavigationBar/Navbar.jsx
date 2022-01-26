@@ -108,6 +108,11 @@ export default function Navbar() {
                   UTME Subjects
                 </a>
               </li>
+              <li className="nav-item">
+                <a className="nav-link text-white" href="/candidates">
+                  Candidates
+                </a>
+              </li>
               {/* <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
