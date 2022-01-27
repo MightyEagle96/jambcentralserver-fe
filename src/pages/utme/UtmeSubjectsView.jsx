@@ -52,7 +52,7 @@ export default function UtmeSubjectsView() {
                         <td>{sub.title}</td>
                         <td>
                           <a
-                            href={`/questions/${sub.slug}`}
+                            href={`/questions/${sub._id}`}
                             className="btn btn-outline-success"
                           >
                             Set Question

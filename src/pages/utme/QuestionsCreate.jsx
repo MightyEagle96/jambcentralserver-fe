@@ -5,7 +5,7 @@ import { httpService } from "../../services/services";
 
 export default function QuestionsCreate({
   subjectData,
-  getSubjectData,
+  FetchQuestion,
   singleQuestion,
 }) {
   const [questionData, setQuestionData] = useState({});
@@ -38,7 +38,7 @@ export default function QuestionsCreate({
       if (res) {
         setLoading(false);
         alert.success(res.data.message);
-        getSubjectData();
+        FetchQuestion();
         setQuestionData({
           question: "",
           optionA: "",
@@ -56,7 +56,7 @@ export default function QuestionsCreate({
       if (res) {
         setLoading(false);
         alert.success(res.data.message);
-        getSubjectData();
+        FetchQuestion();
         setQuestionData({
           question: "",
           optionA: "",

@@ -62,7 +62,9 @@ export default function CandidatesView() {
                   </tr>
                 ))
               ) : (
-                <td colSpan={6}>NO CANDIDTATES REGISTERED</td>
+                <tr>
+                  <td colSpan={6}>NO CANDIDTATES REGISTERED</td>
+                </tr>
               )}
             </tbody>
           </table>

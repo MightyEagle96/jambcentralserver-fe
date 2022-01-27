@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 
 export default function QuestionsView() {
   const [subjectData, setSubjectData] = useState({});
+  const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadSpecific, setLoadSpecific] = useState({
     loading: false,
@@ -20,11 +21,24 @@ export default function QuestionsView() {
 
   async function GetSubjectData() {
     setLoading(true);
-    const path = `viewSubjects?slug=${id}`;
+    const path = `viewSubjects?_id=${id}`;
+    setLoading(true);
+    const res = await httpService.get(path);
+    if (res) {
+      setLoading(false);
+      setSubjectData(res.data.subjects[0]);
+    } else {
+      alert.error("Cannot get subject data");
+    }
+  }
+  async function FetchQuestions() {
+    setLoading(true);
+    const path = `viewQuestions?subject=${id}`;
     const res = await httpService.get(path);
 
-    if (res && res.data.subjects.length > 0) {
-      setSubjectData(res.data.subjects[0]);
+    console.log(res.data.questions[0].questions);
+    if (res && res.data.questions) {
+      setQuestions(res.data.questions[0].questions);
       setLoading(false);
     } else {
       setLoading(false);
@@ -60,7 +74,7 @@ export default function QuestionsView() {
           setLoadSpecific({ loading: false, id: "", type: "" });
 
           setSingleQuestion(res.data.question);
-          GetSubjectData();
+          FetchQuestions();
         }
       }
     });
@@ -68,12 +82,13 @@ export default function QuestionsView() {
 
   useEffect(() => {
     GetSubjectData();
+    FetchQuestions();
   }, []);
   return (
     <div>
       <QuestionsCreate
         subjectData={subjectData}
-        getSubjectData={GetSubjectData}
+        FetchQuestion={FetchQuestions}
         singleQuestion={singleQuestion}
       ></QuestionsCreate>
       {loading ? (
@@ -110,25 +125,25 @@ export default function QuestionsView() {
                 </tr>
               </thead>
               <tbody>
-                {subjectData && subjectData.questions
-                  ? subjectData.questions.map((sub, index) => (
-                      <tr>
+                {questions.length > 0
+                  ? questions.map((q, index) => (
+                      <tr key={index}>
                         <td>{index + 1}</td>
-                        <td>{sub.question}</td>
-                        <td>{sub.optionA}</td>
-                        <td>{sub.optionB}</td>
-                        <td>{sub.optionC}</td>
-                        <td>{sub.optionD}</td>
-                        <td>{sub.correctAnswer}</td>
+                        <td>{q.question}</td>
+                        <td>{q.optionA}</td>
+                        <td>{q.optionB}</td>
+                        <td>{q.optionC}</td>
+                        <td>{q.optionD}</td>
+                        <td>{q.correctAnswer}</td>
                         <td>
                           <button
                             className="btn btn-light text-warning"
                             onClick={() => {
-                              FetchQuestion(sub._id);
+                              FetchQuestion(q._id);
                             }}
                           >
                             {loadSpecific.loading &&
-                            loadSpecific.id === sub._id &&
+                            loadSpecific.id === q._id &&
                             loadSpecific.type === "edit" ? (
                               <div
                                 class="spinner-border spinner-border-sm text-warning"
@@ -145,11 +160,11 @@ export default function QuestionsView() {
                           <button
                             className="btn btn-light text-danger"
                             onClick={() => {
-                              DeleteQuestion(sub._id);
+                              DeleteQuestion(q._id);
                             }}
                           >
                             {loadSpecific.loading &&
-                            loadSpecific.id === sub._id &&
+                            loadSpecific.id === q._id &&
                             loadSpecific.type === "delete" ? (
                               <div
                                 class="spinner-border spinner-border-sm text-danger"
