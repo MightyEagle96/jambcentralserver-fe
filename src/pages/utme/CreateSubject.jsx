@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 import { httpService } from "../../services/services";
+import ControlledEditor from "../../components/elements/Editor";
 
 export default function CreateSubject({ getSubjects }) {
   const [subject, setSubject] = useState("");
@@ -36,40 +37,59 @@ export default function CreateSubject({ getSubjects }) {
       }
     });
   }
+
   return (
-    <div className="card">
-      <div className="card-header">Create new subject</div>
-      <div className="card-body">
-        <div className="p-3">
-          <form onSubmit={CreateSubject}>
-            <input
-              type="text"
-              name=""
-              id=""
-              className="form-control"
-              placeholder="Subject Name"
-              onChange={(e) => {
-                setSubject(e.target.value);
-              }}
-              required
-              value={subject}
-            />
-            <div className="mt-3">
-              <button className="btn btn-success" type="submit">
-                {loading ? (
-                  <div className="">
-                    <div class="spinner-border text-white" role="status">
-                      <span class="visually-hidden">Loading...</span>
-                    </div>
-                  </div>
-                ) : (
-                  "Create Subject"
-                )}
-              </button>
-            </div>
-          </form>
+    // <div className="card">
+    //   <div className="card-header">Create new subject</div>
+    //   <div className="card-body">
+    //     <div className="p-3">
+    //       <form onSubmit={CreateSubject}>
+    //         <input
+    //           type="text"
+    //           name=""
+    //           id=""
+    //           className="form-control"
+    //           placeholder="Subject Name"
+    //           onChange={(e) => {
+    //             setSubject(e.target.value);
+    //           }}
+    //           required
+    //           value={subject}
+    //         />
+    //         <div className="mt-3">
+    //           <button className="btn btn-success" type="submit">
+    //             {loading ? (
+    //               <div className="">
+    //                 <div class="spinner-border text-white" role="status">
+    //                   <span class="visually-hidden">Loading...</span>
+    //                 </div>
+    //               </div>
+    //             ) : (
+    //               "Create Subject"
+    //             )}
+    //           </button>
+    //         </div>
+    //       </form>
+    //     </div>
+    //   </div>
+    // </div>
+    <>
+      <form>
+        <ControlledEditor />
+        <div className="mt-3">
+          <button className="btn btn-success" type="submit">
+            {loading ? (
+              <div className="">
+                <div class="spinner-border text-white" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            ) : (
+              "Create Subject"
+            )}
+          </button>
         </div>
-      </div>
-    </div>
+      </form>
+    </>
   );
 }
