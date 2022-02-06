@@ -22,10 +22,11 @@ class ControlledEditor extends Component {
     return (
       <Editor
         editorState={editorState}
-        wrapperClassName="demo-wrapper"
-        editorClassName="demo-editor"
+        wrapperClassName="wrapper-class"
+        editorClassName="editor-class"
+        toolbarClassName="toolbar-class"
         editorStyle={{
-          borderColor: "red",
+          borderColor: "black",
         }}
         onEditorStateChange={this.onEditorStateChange}
       />

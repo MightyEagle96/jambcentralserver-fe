@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAlert } from "react-alert";
-import "draft-js/dist/Draft.css";
+import ControlledEditor from "../../components/elements/Editor";
 import { httpService } from "../../services/services";
 
 export default function QuestionsCreate({
@@ -79,6 +79,7 @@ export default function QuestionsCreate({
           <form onSubmit={PostQuestion}>
             <div className="row">
               <div className="col-md-4 border-end">
+                <ControlledEditor />
                 <label htmlFor="question" className="mb-2">
                   Question
                 </label>
