@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAlert } from "react-alert";
+import { Editor, EditorState } from "draft-js";
 import "draft-js/dist/Draft.css";
 import { httpService } from "../../services/services";
 
@@ -9,11 +10,12 @@ export default function QuestionsCreate({
   singleQuestion,
 }) {
   const [questionData, setQuestionData] = useState({});
-
+  const [editorState, setEditorState] = useState({
+    editorState: EditorState.createEmpty(),
+  });
   const [loading, setLoading] = useState(false);
 
   if (singleQuestion) {
-    console.log(singleQuestion);
     questionData.question = singleQuestion.question;
     questionData.optionA = singleQuestion.optionA;
     questionData.optionB = singleQuestion.optionB;
@@ -75,6 +77,7 @@ export default function QuestionsCreate({
     <div>
       <div className="p-3">
         <div className="border border-light p-5 rounded-3 border-2">
+          {/* <Editor editorState={editorState.editorState} onChange={()=>{setEditorState({name:})}}></Editor> */}
           <div className="h3 mb-3 text-success">Create Questions</div>
           <form onSubmit={PostQuestion}>
             <div className="row">

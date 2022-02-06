@@ -36,7 +36,6 @@ export default function QuestionsView() {
     const path = `viewQuestions?subject=${id}`;
     const res = await httpService.get(path);
 
-    console.log(res.data.questions[0].questions);
     if (res && res.data.questions) {
       setQuestions(res.data.questions[0].questions);
       setLoading(false);
