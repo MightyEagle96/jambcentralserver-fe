@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useAlert } from "react-alert";
-import { Editor, EditorState } from "draft-js";
-import "draft-js/dist/Draft.css";
+import ControlledEditor from "../../components/elements/Editor";
 import { httpService } from "../../services/services";
 
 export default function QuestionsCreate({
@@ -10,9 +9,7 @@ export default function QuestionsCreate({
   singleQuestion,
 }) {
   const [questionData, setQuestionData] = useState({});
-  const [editorState, setEditorState] = useState({
-    editorState: EditorState.createEmpty(),
-  });
+
   const [loading, setLoading] = useState(false);
 
   if (singleQuestion) {
@@ -82,6 +79,7 @@ export default function QuestionsCreate({
           <form onSubmit={PostQuestion}>
             <div className="row">
               <div className="col-md-4 border-end">
+                <ControlledEditor />
                 <label htmlFor="question" className="mb-2">
                   Question
                 </label>
