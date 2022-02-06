@@ -81,11 +81,11 @@ export default function ViewCenterPage() {
         {/* {loading && <Loader />} */}
         <div className="row py-5">
           <div className="col-md-4">
-            {jambCenter !== "" && (
+            {Object.keys(jambCenter).length !== 0 && (
               <div className="card card-custom">
                 <div className="card-body">
                   <div className="row py-5">
-                    <h3 className="h3">{jambCenter.centerName}</h3>
+                    <h5 className="h5">{jambCenter.centerName}</h5>
                     <p>{jambCenter.referenceNumber}</p>
                     <p>{jambCenter.centerAdministrator}</p>
                     <p>{jambCenter.email}</p>
@@ -95,13 +95,8 @@ export default function ViewCenterPage() {
               </div>
             )}
           </div>
-          <div className="col md-8">
+          <div className="col-md-8">
             <DataTable
-              title={
-                `${jambCenter.centerName}`
-                  ? `${jambCenter.centerName} Details`
-                  : "Center Details"
-              }
               columns={columns}
               data={results.centerReports}
               highlightOnHover
