@@ -25,7 +25,7 @@ class ControlledEditor extends Component {
         wrapperClassName="demo-wrapper"
         editorClassName="demo-editor"
         editorStyle={{
-          borderColor: "red",
+          borderColor: 'red'
         }}
         onEditorStateChange={this.onEditorStateChange}
       />
