@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAlert } from "react-alert";
-import "draft-js/dist/Draft.css";
+import ControlledEditor from "../../components/elements/Editor";
 import { httpService } from "../../services/services";
 
 export default function QuestionsCreate({
@@ -13,7 +13,6 @@ export default function QuestionsCreate({
   const [loading, setLoading] = useState(false);
 
   if (singleQuestion) {
-    console.log(singleQuestion);
     questionData.question = singleQuestion.question;
     questionData.optionA = singleQuestion.optionA;
     questionData.optionB = singleQuestion.optionB;
@@ -75,10 +74,12 @@ export default function QuestionsCreate({
     <div>
       <div className="p-3">
         <div className="border border-light p-5 rounded-3 border-2">
+          {/* <Editor editorState={editorState.editorState} onChange={()=>{setEditorState({name:})}}></Editor> */}
           <div className="h3 mb-3 text-success">Create Questions</div>
           <form onSubmit={PostQuestion}>
             <div className="row">
               <div className="col-md-4 border-end">
+                <ControlledEditor />
                 <label htmlFor="question" className="mb-2">
                   Question
                 </label>
