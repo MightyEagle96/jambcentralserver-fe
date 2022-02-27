@@ -4,6 +4,8 @@ import { httpService } from "../../services/services";
 import QuestionsCreate from "./QuestionsCreate";
 import { useAlert } from "react-alert";
 import Swal from "sweetalert2";
+import DataTable from "react-data-table-component";
+import { Chip } from "@mui/material";
 
 export default function QuestionsView() {
   const [subjectData, setSubjectData] = useState({});
@@ -83,6 +85,138 @@ export default function QuestionsView() {
     GetSubjectData();
     FetchQuestions();
   }, []);
+
+  const columns = [
+    { name: "Question", selector: (row) => row.question },
+    { name: "Option A", selector: (row) => row.optionA },
+    { name: "Option B", selector: (row) => row.optionB },
+    { name: "Option C", selector: (row) => row.optionC },
+    { name: "Option D", selector: (row) => row.optionD },
+    { name: "Correct Answer", selector: (row) => row.correctAnswer },
+    {
+      name: "Edit",
+      selector: (row) => (
+        <button
+          className="btn btn-light text-warning"
+          onClick={() => {
+            FetchQuestion(row._id);
+          }}
+        >
+          {loadSpecific.loading &&
+          loadSpecific.id === row._id &&
+          loadSpecific.type === "edit" ? (
+            <div
+              class="spinner-border spinner-border-sm text-warning"
+              role="status"
+            >
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          ) : (
+            <i class="fas fa-edit    "></i>
+          )}
+        </button>
+      ),
+    },
+    {
+      name: "Delete",
+      selector: (row) => (
+        <button
+          className="btn btn-light text-danger"
+          onClick={() => {
+            DeleteQuestion(row._id);
+          }}
+        >
+          {loadSpecific.loading &&
+          loadSpecific.id === row._id &&
+          loadSpecific.type === "delete" ? (
+            <div
+              class="spinner-border spinner-border-sm text-danger"
+              role="status"
+            >
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          ) : (
+            <i class="fas fa-trash    "></i>
+          )}
+        </button>
+      ),
+    },
+    { name: "Group Status", selector: (row) => Grouping(row) },
+  ];
+
+  function Grouping(data) {
+    if (data.startGroup) {
+      return (
+        <Chip
+          label="Group Started"
+          color="success"
+          onClick={() => {
+            RemoveStartGroup(data);
+          }}
+        />
+      );
+    } else if (data.stopGroup) {
+      return (
+        <Chip
+          label="Group Stopped"
+          color="error"
+          onClick={() => {
+            RemoveStopGroup(data);
+          }}
+        />
+      );
+    } else return "-";
+  }
+
+  function RemoveStartGroup(data) {
+    Swal.fire({
+      icon: "question",
+      title: "Remove Start Group",
+      text: "Do you want to remove start group flag for this question",
+      confirmButtonText: "Yes, Remove",
+      cancelButtonText: "No don't remove",
+      showCancelButton: true,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const path = `updateQuestion/${subjectData._id}/${data._id}`;
+        data.startGroup = false;
+        const res = await httpService.patch(path, data);
+        if (res) {
+          FetchQuestions();
+          Swal.fire({
+            icon: "success",
+            title: "SUCCESS",
+            text: "Start group removed successfully",
+          });
+        }
+      }
+    });
+  }
+
+  function RemoveStopGroup(data) {
+    Swal.fire({
+      icon: "question",
+      title: "Remove Start Group",
+      text: "Do you want to remove stop group flag for this question",
+      confirmButtonText: "Yes, Remove",
+      cancelButtonText: "No don't remove",
+      showCancelButton: true,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const path = `updateQuestion/${subjectData._id}/${data._id}`;
+        data.stopGroup = false;
+        const res = await httpService.patch(path, data);
+        if (res) {
+          FetchQuestions();
+          Swal.fire({
+            icon: "success",
+            title: "SUCCESS",
+            text: "Stop group removed successfully",
+          });
+        }
+      }
+    });
+  }
   return (
     <div>
       <QuestionsCreate
@@ -104,85 +238,12 @@ export default function QuestionsView() {
         ""
       )}
       <div className=" p-3">
-        <div className="card p-3">
-          <div className="card-title">
-            <div className="h3">{subjectData.title}</div>
-          </div>
-          <div className="card-body">
-            <table className="table table-bordered">
-              <thead>
-                <tr>
-                  <th>S/N</th>
-                  <th>Question</th>
-                  <th>Option A</th>
-                  <th>Option B</th>
-                  <th>Option C</th>
-                  <th>Option D</th>
-                  <th>Correct Answer</th>
-                  <th>Edit</th>
-                  <th>Delete</th>
-                </tr>
-              </thead>
-              <tbody>
-                {questions.length > 0
-                  ? questions.map((q, index) => (
-                      <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td>{q.question}</td>
-                        <td>{q.optionA}</td>
-                        <td>{q.optionB}</td>
-                        <td>{q.optionC}</td>
-                        <td>{q.optionD}</td>
-                        <td>{q.correctAnswer}</td>
-                        <td>
-                          <button
-                            className="btn btn-light text-warning"
-                            onClick={() => {
-                              FetchQuestion(q._id);
-                            }}
-                          >
-                            {loadSpecific.loading &&
-                            loadSpecific.id === q._id &&
-                            loadSpecific.type === "edit" ? (
-                              <div
-                                class="spinner-border spinner-border-sm text-warning"
-                                role="status"
-                              >
-                                <span class="visually-hidden">Loading...</span>
-                              </div>
-                            ) : (
-                              <i class="fas fa-edit    "></i>
-                            )}
-                          </button>
-                        </td>
-                        <td>
-                          <button
-                            className="btn btn-light text-danger"
-                            onClick={() => {
-                              DeleteQuestion(q._id);
-                            }}
-                          >
-                            {loadSpecific.loading &&
-                            loadSpecific.id === q._id &&
-                            loadSpecific.type === "delete" ? (
-                              <div
-                                class="spinner-border spinner-border-sm text-danger"
-                                role="status"
-                              >
-                                <span class="visually-hidden">Loading...</span>
-                              </div>
-                            ) : (
-                              <i class="fas fa-trash    "></i>
-                            )}
-                          </button>
-                        </td>
-                      </tr>
-                    ))
-                  : ""}
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <DataTable
+          data={questions}
+          title={subjectData.title}
+          columns={columns}
+          pagination
+        />
       </div>
     </div>
   );
