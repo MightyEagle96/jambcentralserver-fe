@@ -87,12 +87,16 @@ export default function QuestionsView() {
   }, []);
 
   const columns = [
-    { name: "Question", selector: (row) => row.question },
-    { name: "Option A", selector: (row) => row.optionA },
-    { name: "Option B", selector: (row) => row.optionB },
-    { name: "Option C", selector: (row) => row.optionC },
-    { name: "Option D", selector: (row) => row.optionD },
-    { name: "Correct Answer", selector: (row) => row.correctAnswer },
+    { name: "Question", selector: (row) => truncateString(row.question, 100) },
+    { name: "Option A", selector: (row) => truncateString(row.optionA, 50) },
+    { name: "Option B", selector: (row) => truncateString(row.optionB, 50) },
+    { name: "Option C", selector: (row) => truncateString(row.optionC, 50) },
+    { name: "Option D", selector: (row) => truncateString(row.optionD, 50) },
+    {
+      name: "Correct Answer",
+      selector: (row) => truncateString(row.correctAnswer, 50),
+    },
+    { name: "Group Status", selector: (row) => Grouping(row) },
     {
       name: "Edit",
       selector: (row) => (
@@ -141,8 +145,49 @@ export default function QuestionsView() {
         </button>
       ),
     },
-    { name: "Group Status", selector: (row) => Grouping(row) },
   ];
+
+  const ExpandedComponent = ({ data }) => (
+    <div className="container ">
+      <div className="row shadow-lg p-3 mb-2 mt-2">
+        <div className="col-md-6">
+          <b>Question:</b>
+          <p>{data.question}</p>
+        </div>
+        <div className="col-md-6">
+          <div className="row">
+            <div className="col-md-3">
+              <div>
+                <b>Option A:</b>
+                <p>{data.optionA}</p>
+              </div>
+              <div>
+                <b>Option B:</b>
+                <p>{data.optionB}</p>
+              </div>
+            </div>
+            <div className="col-md-3">
+              <div>
+                <b>Option C:</b>
+                <p>{data.optionC}</p>
+              </div>
+              <div>
+                <b>Option D:</b>
+                <p>{data.optionD}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  function truncateString(str, num) {
+    if (str.length <= num) {
+      return str;
+    }
+    return str.slice(0, num) + "...";
+  }
 
   function Grouping(data) {
     if (data.startGroup) {
@@ -239,10 +284,14 @@ export default function QuestionsView() {
       )}
       <div className=" p-3">
         <DataTable
-          data={questions}
-          title={subjectData.title}
           columns={columns}
+          data={questions}
+          expandableRows
+          expandableRowsComponent={ExpandedComponent}
           pagination
+          responsive
+          subHeaderWrap
+          title={subjectData.title}
         />
       </div>
     </div>

@@ -13,10 +13,11 @@ const persistConfig = {
 const initialState = {};
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-export const store = createStore(
-  persistedReducer,
-  initialState,
-  composeWithDevTools(applyMiddleware(...middleware))
-);
+export const store =
+  createStore(
+    persistedReducer,
+    initialState,
+    composeWithDevTools(applyMiddleware(...middleware))
+  ) || "";
 
-export const persistor = persistStore(store);
+export const persistor = persistStore(store) || "";
