@@ -148,34 +148,37 @@ export default function QuestionsView() {
   ];
 
   const ExpandedComponent = ({ data }) => (
-    <div className="container ">
+    <div>
       <div className="row shadow-lg p-3 mb-2 mt-2">
         <div className="col-md-6">
           <b>Question:</b>
           <p>{data.question}</p>
         </div>
-        <div className="col-md-6">
-          <div className="row">
-            <div className="col-md-3">
-              <div>
-                <b>Option A:</b>
-                <p>{data.optionA}</p>
-              </div>
-              <div>
-                <b>Option B:</b>
-                <p>{data.optionB}</p>
-              </div>
-            </div>
-            <div className="col-md-3">
-              <div>
-                <b>Option C:</b>
-                <p>{data.optionC}</p>
-              </div>
-              <div>
-                <b>Option D:</b>
-                <p>{data.optionD}</p>
-              </div>
-            </div>
+
+        <div className="col-md-2">
+          <div>
+            <b>Option A:</b>
+            <p>{data.optionA}</p>
+          </div>
+          <div>
+            <b>Option B:</b>
+            <p>{data.optionB}</p>
+          </div>
+        </div>
+        <div className="col-md-2">
+          <div>
+            <b>Option C:</b>
+            <p>{data.optionC}</p>
+          </div>
+          <div>
+            <b>Option D:</b>
+            <p>{data.optionD}</p>
+          </div>
+        </div>
+        <div className="col-md-2">
+          <div>
+            <b>Correct Answer:</b>
+            <p>{data.correctAnswer}</p>
           </div>
         </div>
       </div>
