@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { convertToRaw } from 'draft-js';
+import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 class ControlledEditor extends Component {
-  state = {
-    editorState: undefined,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      editorState: EditorState.createEmpty(),
+    };
+  }
 
   onEditorStateChange = (editorState) => {
     this.setState({
@@ -17,47 +20,20 @@ class ControlledEditor extends Component {
   render() {
     const { editorState } = this.state;
     return (
-      <div>
-        <Editor
-          wrapperClassName='demo-wrapper'
-          editorClassName='demo-editor'
-          onEditorStateChange={this.onEditorStateChange}
-        />
-      </div>
+      <Editor
+        editorState={editorState}
+        editorStyle={{
+          border: '1px solid silver',
+          paddingLeft: 5,
+          fontSize: 12,
+          borderRadius: 5,
+          minHeight: 150,
+        }}
+        onEditorStateChange={this.onEditorStateChange}
+        placeholder='Start Typing ...'
+      />
     );
   }
 }
-
-// class ControlledEditor extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       editorState: EditorState.createEmpty(),
-//     };
-//   }
-
-//   onEditorStateChange = (editorState) => {
-//     this.setState({
-//       editorState,
-//     });
-//   };
-
-//   render() {
-//     const { editorState } = this.state;
-//     return (
-//       <Editor
-//         editorState={editorState}
-//         wrapperClassName='wrapper-class'
-//         editorClassName='editor-class'
-//         toolbarClassName='toolbar-class'
-//         editorStyle={{
-//           borderColor: 'red',
-//           borderWidth: 4,
-//         }}
-//         onEditorStateChange={this.onEditorStateChange}
-//       />
-//     );
-//   }
-// }
 
 export default ControlledEditor;

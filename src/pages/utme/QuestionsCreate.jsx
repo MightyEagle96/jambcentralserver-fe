@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { useAlert } from "react-alert";
-import ControlledEditor from "../../components/elements/Editor";
-import { httpService } from "../../services/services";
+import React, { useState } from 'react';
+import { useAlert } from 'react-alert';
+import ControlledEditor from '../../components/elements/Editor';
+import { httpService } from '../../services/services';
 
 export default function QuestionsCreate({
   subjectData,
@@ -39,13 +39,13 @@ export default function QuestionsCreate({
         alert.success(res.data.message);
         FetchQuestion();
         setQuestionData({
-          question: "",
-          optionA: "",
-          optionB: "",
-          optionC: "",
-          optionD: "",
-          correctAnswer: "",
-          _id: "",
+          question: '',
+          optionA: '',
+          optionB: '',
+          optionC: '',
+          optionD: '',
+          correctAnswer: '',
+          _id: '',
         });
       }
     } else {
@@ -57,12 +57,12 @@ export default function QuestionsCreate({
         alert.success(res.data.message);
         FetchQuestion();
         setQuestionData({
-          question: "",
-          optionA: "",
-          optionB: "",
-          optionC: "",
-          optionD: "",
-          correctAnswer: "",
+          question: '',
+          optionA: '',
+          optionB: '',
+          optionC: '',
+          optionD: '',
+          correctAnswer: '',
         });
       } else {
         setLoading(false);
@@ -72,99 +72,114 @@ export default function QuestionsCreate({
 
   return (
     <div>
-      <div className="p-3">
-        <div className="border border-light p-5 rounded-3 border-2">
+      <div className='p-3'>
+        <div className='border border-light p-5 rounded-3 border-2'>
           {/* <Editor editorState={editorState.editorState} onChange={()=>{setEditorState({name:})}}></Editor> */}
-          <div className="h3 mb-3 text-success">Create Questions</div>
+          <div className='h3 mb-3 text-success'>Create Questions</div>
           <form onSubmit={PostQuestion}>
-            <div className="row">
-              <div className="col-md-4 border-end">
+            <div className='row'>
+              <div className='col-md-4 border-end'>
                 <ControlledEditor />
-                <label htmlFor="question" className="mb-2">
-                  Question
-                </label>
-                <textarea
-                  name="question"
-                  id="question"
-                  cols="30"
-                  rows="5"
-                  className="form-control"
-                  onChange={HandleChange}
-                  value={questionData.question}
-                  required
-                ></textarea>
               </div>
-              <div className="col-md-3 border-end">
-                <label htmlFor="optionA" className="mb-2">
+              <div className='col-md-3 border-end'>
+                <label htmlFor='optionA' className='mb-2'>
                   Option A
                 </label>
-                <div className="form-group mb-4">
+                <div className='form-group mb-4'>
                   <input
-                    type="text"
-                    name="optionA"
-                    id="optionA"
-                    className="form-control"
+                    type='text'
+                    name='optionA'
+                    id='optionA'
+                    className='form-control'
                     onChange={HandleChange}
                     value={questionData.optionA}
                     required
                   />
                 </div>
-                <div className="form-group">
-                  <label htmlFor="optionB" className="mb-2">
+                <div className='form-group my-4'>
+                  <label htmlFor='optionB' className='mb-2'>
                     Option B
                   </label>
                   <input
-                    type="text"
-                    name="optionB"
-                    id="optionB"
-                    className="form-control"
+                    type='text'
+                    name='optionB'
+                    id='optionB'
+                    className='form-control'
                     onChange={HandleChange}
                     value={questionData.optionB}
                     required
                   />
                 </div>
-              </div>
-              <div className="col-md-3 border-end">
-                <label htmlFor="optionC" className="mb-2">
-                  Option C
-                </label>
-                <div className="form-group mb-4">
+                <div className='form-group my-4'>
+                  <label htmlFor='optionC' className='mb-2'>
+                    Option C
+                  </label>
                   <input
-                    type="text"
-                    name="optionC"
-                    id="optionC"
-                    className="form-control"
+                    type='text'
+                    name='optionC'
+                    id='optionC'
+                    className='form-control'
                     onChange={HandleChange}
                     value={questionData.optionC}
                     required
                   />
                 </div>
-                <div className="form-group">
-                  <label htmlFor="optionD" className="mb-2">
+                <div className='form-group my-4'>
+                  <label htmlFor='optionD' className='mb-2'>
                     Option D
                   </label>
                   <input
-                    type="text"
-                    name="optionD"
-                    id="optionD"
-                    className="form-control"
+                    type='text'
+                    name='optionD'
+                    id='optionD'
+                    className='form-control'
                     onChange={HandleChange}
                     value={questionData.optionD}
                     required
                   />
                 </div>
               </div>
-              <div className="col-md-2">
-                <div className="form-group mb-2">
-                  <label htmlFor="correctAnswer">Correct Answer</label>
+              {/* <div className='col-md-3 border-end'>
+                <label htmlFor='optionC' className='mb-2'>
+                  Option C
+                </label>
+                <div className='form-group mb-4'>
+                  <input
+                    type='text'
+                    name='optionC'
+                    id='optionC'
+                    className='form-control'
+                    onChange={HandleChange}
+                    value={questionData.optionC}
+                    required
+                  />
+                </div>
+                <div className='form-group'>
+                  <label htmlFor='optionD' className='mb-2'>
+                    Option D
+                  </label>
+                  <input
+                    type='text'
+                    name='optionD'
+                    id='optionD'
+                    className='form-control'
+                    onChange={HandleChange}
+                    value={questionData.optionD}
+                    required
+                  />
+                </div>
+              </div> */}
+              <div className='col-md-2'>
+                <div className='form-group mb-2'>
+                  <label htmlFor='correctAnswer'>Correct Answer</label>
                   <select
-                    name="correctAnswer"
-                    id="correctAnswer"
-                    className="form-control"
+                    name='correctAnswer'
+                    id='correctAnswer'
+                    className='form-control'
                     onChange={HandleChange}
                     value={questionData.correctAnswer}
                   >
-                    <option value="">Select Answer</option>
+                    <option value=''>Select Answer</option>
                     <option value={questionData.optionA}>
                       {questionData.optionA}
                     </option>
@@ -179,19 +194,19 @@ export default function QuestionsCreate({
                     </option>
                   </select>
                 </div>
-                <div className="form-group text-center">
-                  <button className="btn btn-success me-2" type="submit">
+                <div className='form-group text-center'>
+                  <button className='btn btn-success me-2' type='submit'>
                     {loading ? (
-                      <div class="spinner-border text-light" role="status">
-                        <span class="visually-hidden">Loading...</span>
+                      <div class='spinner-border text-light' role='status'>
+                        <span class='visually-hidden'>Loading...</span>
                       </div>
                     ) : questionData._id ? (
-                      "Update"
+                      'Update'
                     ) : (
-                      "Save"
+                      'Save'
                     )}
                   </button>
-                  <button className="btn btn-danger" type="reset">
+                  <button className='btn btn-danger' type='reset'>
                     Reset
                   </button>
                 </div>
