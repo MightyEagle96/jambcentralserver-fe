@@ -4,6 +4,8 @@ import { httpService } from "../../services/services";
 import QuestionsCreate from "./QuestionsCreate";
 import { useAlert } from "react-alert";
 import Swal from "sweetalert2";
+import DataTable from "react-data-table-component";
+import { Chip } from "@mui/material";
 
 export default function QuestionsView() {
   const [subjectData, setSubjectData] = useState({});
@@ -83,6 +85,186 @@ export default function QuestionsView() {
     GetSubjectData();
     FetchQuestions();
   }, []);
+
+  const columns = [
+    { name: "Question", selector: (row) => truncateString(row.question, 100) },
+    { name: "Option A", selector: (row) => truncateString(row.optionA, 50) },
+    { name: "Option B", selector: (row) => truncateString(row.optionB, 50) },
+    { name: "Option C", selector: (row) => truncateString(row.optionC, 50) },
+    { name: "Option D", selector: (row) => truncateString(row.optionD, 50) },
+    {
+      name: "Correct Answer",
+      selector: (row) => truncateString(row.correctAnswer, 50),
+    },
+    { name: "Group Status", selector: (row) => Grouping(row) },
+    {
+      name: "Edit",
+      selector: (row) => (
+        <button
+          className="btn btn-light text-warning"
+          onClick={() => {
+            FetchQuestion(row._id);
+          }}
+        >
+          {loadSpecific.loading &&
+          loadSpecific.id === row._id &&
+          loadSpecific.type === "edit" ? (
+            <div
+              class="spinner-border spinner-border-sm text-warning"
+              role="status"
+            >
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          ) : (
+            <i class="fas fa-edit    "></i>
+          )}
+        </button>
+      ),
+    },
+    {
+      name: "Delete",
+      selector: (row) => (
+        <button
+          className="btn btn-light text-danger"
+          onClick={() => {
+            DeleteQuestion(row._id);
+          }}
+        >
+          {loadSpecific.loading &&
+          loadSpecific.id === row._id &&
+          loadSpecific.type === "delete" ? (
+            <div
+              class="spinner-border spinner-border-sm text-danger"
+              role="status"
+            >
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          ) : (
+            <i class="fas fa-trash    "></i>
+          )}
+        </button>
+      ),
+    },
+  ];
+
+  const ExpandedComponent = ({ data }) => (
+    <div>
+      <div className="row shadow-lg p-3 mb-2 mt-2">
+        <div className="col-md-6">
+          <b>Question:</b>
+          <p>{data.question}</p>
+        </div>
+
+        <div className="col-md-2">
+          <div>
+            <b>Option A:</b>
+            <p>{data.optionA}</p>
+          </div>
+          <div>
+            <b>Option B:</b>
+            <p>{data.optionB}</p>
+          </div>
+        </div>
+        <div className="col-md-2">
+          <div>
+            <b>Option C:</b>
+            <p>{data.optionC}</p>
+          </div>
+          <div>
+            <b>Option D:</b>
+            <p>{data.optionD}</p>
+          </div>
+        </div>
+        <div className="col-md-2">
+          <div>
+            <b>Correct Answer:</b>
+            <p>{data.correctAnswer}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  function truncateString(str, num) {
+    if (str.length <= num) {
+      return str;
+    }
+    return str.slice(0, num) + "...";
+  }
+
+  function Grouping(data) {
+    if (data.startGroup) {
+      return (
+        <Chip
+          label="Group Started"
+          color="success"
+          onClick={() => {
+            RemoveStartGroup(data);
+          }}
+        />
+      );
+    } else if (data.stopGroup) {
+      return (
+        <Chip
+          label="Group Stopped"
+          color="error"
+          onClick={() => {
+            RemoveStopGroup(data);
+          }}
+        />
+      );
+    } else return "-";
+  }
+
+  function RemoveStartGroup(data) {
+    Swal.fire({
+      icon: "question",
+      title: "Remove Start Group",
+      text: "Do you want to remove start group flag for this question",
+      confirmButtonText: "Yes, Remove",
+      cancelButtonText: "No don't remove",
+      showCancelButton: true,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const path = `updateQuestion/${subjectData._id}/${data._id}`;
+        data.startGroup = false;
+        const res = await httpService.patch(path, data);
+        if (res) {
+          FetchQuestions();
+          Swal.fire({
+            icon: "success",
+            title: "SUCCESS",
+            text: "Start group removed successfully",
+          });
+        }
+      }
+    });
+  }
+
+  function RemoveStopGroup(data) {
+    Swal.fire({
+      icon: "question",
+      title: "Remove Start Group",
+      text: "Do you want to remove stop group flag for this question",
+      confirmButtonText: "Yes, Remove",
+      cancelButtonText: "No don't remove",
+      showCancelButton: true,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const path = `updateQuestion/${subjectData._id}/${data._id}`;
+        data.stopGroup = false;
+        const res = await httpService.patch(path, data);
+        if (res) {
+          FetchQuestions();
+          Swal.fire({
+            icon: "success",
+            title: "SUCCESS",
+            text: "Stop group removed successfully",
+          });
+        }
+      }
+    });
+  }
   return (
     <div>
       <QuestionsCreate
@@ -104,85 +286,16 @@ export default function QuestionsView() {
         ""
       )}
       <div className=" p-3">
-        <div className="card p-3">
-          <div className="card-title">
-            <div className="h3">{subjectData.title}</div>
-          </div>
-          <div className="card-body">
-            <table className="table table-bordered">
-              <thead>
-                <tr>
-                  <th>S/N</th>
-                  <th>Question</th>
-                  <th>Option A</th>
-                  <th>Option B</th>
-                  <th>Option C</th>
-                  <th>Option D</th>
-                  <th>Correct Answer</th>
-                  <th>Edit</th>
-                  <th>Delete</th>
-                </tr>
-              </thead>
-              <tbody>
-                {questions.length > 0
-                  ? questions.map((q, index) => (
-                      <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td>{q.question}</td>
-                        <td>{q.optionA}</td>
-                        <td>{q.optionB}</td>
-                        <td>{q.optionC}</td>
-                        <td>{q.optionD}</td>
-                        <td>{q.correctAnswer}</td>
-                        <td>
-                          <button
-                            className="btn btn-light text-warning"
-                            onClick={() => {
-                              FetchQuestion(q._id);
-                            }}
-                          >
-                            {loadSpecific.loading &&
-                            loadSpecific.id === q._id &&
-                            loadSpecific.type === "edit" ? (
-                              <div
-                                class="spinner-border spinner-border-sm text-warning"
-                                role="status"
-                              >
-                                <span class="visually-hidden">Loading...</span>
-                              </div>
-                            ) : (
-                              <i class="fas fa-edit    "></i>
-                            )}
-                          </button>
-                        </td>
-                        <td>
-                          <button
-                            className="btn btn-light text-danger"
-                            onClick={() => {
-                              DeleteQuestion(q._id);
-                            }}
-                          >
-                            {loadSpecific.loading &&
-                            loadSpecific.id === q._id &&
-                            loadSpecific.type === "delete" ? (
-                              <div
-                                class="spinner-border spinner-border-sm text-danger"
-                                role="status"
-                              >
-                                <span class="visually-hidden">Loading...</span>
-                              </div>
-                            ) : (
-                              <i class="fas fa-trash    "></i>
-                            )}
-                          </button>
-                        </td>
-                      </tr>
-                    ))
-                  : ""}
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <DataTable
+          columns={columns}
+          data={questions}
+          expandableRows
+          expandableRowsComponent={ExpandedComponent}
+          pagination
+          responsive
+          subHeaderWrap
+          title={subjectData.title}
+        />
       </div>
     </div>
   );

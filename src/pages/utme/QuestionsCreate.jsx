@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { useAlert } from 'react-alert';
-import ControlledEditor from '../../components/elements/Editor';
-import { httpService } from '../../services/services';
-
+import React, { useState, useRef } from "react";
+import { useAlert } from "react-alert";
+import { httpService } from "../../services/services";
+import { Editor } from "@tinymce/tinymce-react";
+import { Button } from "@mui/material";
+import Swal from "sweetalert2";
 export default function QuestionsCreate({
   subjectData,
   FetchQuestion,
@@ -47,6 +48,8 @@ export default function QuestionsCreate({
           correctAnswer: '',
           _id: '',
         });
+
+        setQuestionData({});
       }
     } else {
       const path = `postQuestion/${subjectData._id}`;
@@ -69,6 +72,41 @@ export default function QuestionsCreate({
       }
     }
   }
+  const editorRef = useRef(null);
+  const log = () => {
+    if (editorRef.current) {
+      console.log(editorRef.current.getContent());
+    }
+  };
+
+  const startGroupBtn = () => {
+    Swal.fire({
+      icon: "question",
+      title: "Start a group?",
+      text: "Do you wish to start a group of questions with this particular question?",
+      confirmButtonText: "Yes start",
+      cancelButtonText: "No ",
+      showCancelButton: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setQuestionData({ ...questionData, startGroup: true });
+      }
+    });
+  };
+  const stopGroupBtn = () => {
+    Swal.fire({
+      icon: "question",
+      title: "End a group?",
+      text: "Do you wish to end a group of questions with this particular question?",
+      cancelButtonText: "No ",
+      showCancelButton: true,
+      confirmButtonText: "Yes, stop",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setQuestionData({ ...questionData, stopGroup: true });
+      }
+    });
+  };
 
   return (
     <div>
@@ -80,6 +118,43 @@ export default function QuestionsCreate({
             <div className='row'>
               <div className='col-md-4 border-end'>
                 <ControlledEditor />
+            <div className="row">
+              <div className="col-md-3 border-end">
+                {/* <div>
+                  <Editor
+                    onInit={(evt, editor) => (editorRef.current = editor)}
+                    initialValue="<p>This is the initial content of the editor.</p>"
+                    init={{
+                      height: 500,
+                      menubar: false,
+                      plugins: [
+                        "advlist autolink lists link image charmap print preview anchor",
+                        "searchreplace visualblocks code fullscreen",
+                        "insertdatetime media table paste code help wordcount",
+                      ],
+                      toolbar:
+                        "undo redo | formatselect | " +
+                        "bold italic backcolor | alignleft aligncenter " +
+                        "alignright alignjustify | bullist numlist outdent indent | " +
+                        "removeformat | help",
+                      content_style:
+                        "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                    }}
+                  />
+                </div> */}
+                <label htmlFor="question" className="mb-2">
+                  Question
+                </label>
+                <textarea
+                  name="question"
+                  id="question"
+                  cols="30"
+                  rows="5"
+                  className="form-control"
+                  onChange={HandleChange}
+                  value={questionData.question}
+                  required
+                ></textarea>
               </div>
               <div className='col-md-3 border-end'>
                 <label htmlFor='optionA' className='mb-2'>
@@ -172,6 +247,10 @@ export default function QuestionsCreate({
               <div className='col-md-2'>
                 <div className='form-group mb-2'>
                   <label htmlFor='correctAnswer'>Correct Answer</label>
+              </div>
+              <div className="col-md-3">
+                <div className="form-group mb-2">
+                  <label htmlFor="correctAnswer">Correct Answer</label>
                   <select
                     name='correctAnswer'
                     id='correctAnswer'
@@ -196,6 +275,27 @@ export default function QuestionsCreate({
                 </div>
                 <div className='form-group text-center'>
                   <button className='btn btn-success me-2' type='submit'>
+                <div className="form-group text-center mb-2">
+                  <Button
+                    variant="outlined"
+                    className="me-2"
+                    onClick={startGroupBtn}
+                  >
+                    {" "}
+                    start group
+                  </Button>
+
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    onClick={stopGroupBtn}
+                  >
+                    {" "}
+                    stop group
+                  </Button>
+                </div>
+                <div className="form-group text-center">
+                  <button className="btn btn-success me-2" type="submit">
                     {loading ? (
                       <div class='spinner-border text-light' role='status'>
                         <span class='visually-hidden'>Loading...</span>
